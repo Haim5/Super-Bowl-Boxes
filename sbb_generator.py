@@ -20,16 +20,6 @@ sheet = workbook.sheet1
 names = []
 locations = set()
 
-digits1 = [i for i in range(10)]
-digits2 = [i for i in range(10)]
-
-random.shuffle(digits1)
-random.shuffle(digits2)
-
-for i in range(3, 13):
-    sheet.update_cell(2, i, digits1.pop())
-    sheet.update_cell(i, 2, digits2.pop())
-
 for i in range(3, 13):
     for j in range(3, 13):
         locations.add((i,j))
@@ -50,5 +40,15 @@ for _ in range(multiply_factor):
         (r, c) = available_locations.pop()
         sheet.update_cell(r, c, name)
         time.sleep(0.5)
+
+digits1 = [i for i in range(10)]
+digits2 = [i for i in range(10)]
+
+random.shuffle(digits1)
+random.shuffle(digits2)
+
+for i in range(3, 13):
+    sheet.update_cell(2, i, digits1.pop())
+    sheet.update_cell(i, 2, digits2.pop())
 
 print("DONE.")
