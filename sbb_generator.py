@@ -1,7 +1,7 @@
 import gspread
+from gspread.utils import rowcol_to_a1
 from oauth2client.service_account import ServiceAccountCredentials
 import random
-import time
 
 spreadsheet_name = ""
 secret_key_path = ""
@@ -35,11 +35,18 @@ available_locations = list(locations)
 random.shuffle(available_locations)
 multiply_factor = (100 // len(names)) - 1
 
+cells_to_update = []
+formats_to_update = []
+
 for _ in range(multiply_factor):
     for name in names:
         (r, c) = available_locations.pop()
-        sheet.update_cell(r, c, name)
-        time.sleep(0.5)
+        cells_to_update.append(gspread.Cell(r, c, name))
+        formats_to_update.append({"range": rowcol_to_a1(r, c), "format": {"backgroundColor": {"red": 1.0, "green": 1.0, "blue": 0.0}}})
+
+if cells_to_update:
+    sheet.update_cells(cells_to_update)
+    sheet.batch_format(formats_to_update)
 
 digits1 = [i for i in range(10)]
 digits2 = [i for i in range(10)]
@@ -47,8 +54,11 @@ digits2 = [i for i in range(10)]
 random.shuffle(digits1)
 random.shuffle(digits2)
 
+digits_cells = []
 for i in range(3, 13):
-    sheet.update_cell(2, i, digits1.pop())
-    sheet.update_cell(i, 2, digits2.pop())
+    digits_cells.append(gspread.Cell(2, i, digits1.pop()))
+    digits_cells.append(gspread.Cell(i, 2, digits2.pop()))
+
+sheet.update_cells(digits_cells)
 
 print("DONE.")
