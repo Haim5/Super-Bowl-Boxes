@@ -45,6 +45,7 @@ for _ in range(multiply_factor):
         formats_to_update.append({"range": rowcol_to_a1(r, c), "format": {"backgroundColor": {"red": 1.0, "green": 1.0, "blue": 0.0}}})
 
 if cells_to_update:
+    cells_to_update.append(gspread.Cell(23, 3, multiply_factor + 1))
     sheet.update_cells(cells_to_update)
     sheet.batch_format(formats_to_update)
 
