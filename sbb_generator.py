@@ -18,20 +18,16 @@ workbook = file.open(spreadsheet_name)
 sheet = workbook.sheet1
 
 names = []
-locations = set()
-
-for i in range(3, 13):
-    for j in range(3, 13):
-        locations.add((i,j))
+available_locations = []
 
 cells = sheet.range('C3:L12')
 for cell in cells:
     name = cell.value
     if name is not None and len(name) > 0:
         names.append(name)
-        locations.remove((int(cell.row), int(cell.col)))
-  
-available_locations = list(locations)
+    else:
+        available_locations.append((int(cell.row), int(cell.col)))
+
 random.shuffle(available_locations)
 multiply_factor = (100 // len(names)) - 1
 
