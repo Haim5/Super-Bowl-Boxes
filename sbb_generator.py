@@ -29,7 +29,7 @@ for cell in cells:
         available_locations.append((int(cell.row), int(cell.col)))
 
 random.shuffle(available_locations)
-multiply_factor = (100 // len(names)) - 1
+multiply_factor = 0 if not names else (100 // len(names)) - 1
 
 cells_to_update = []
 formats_to_update = []
@@ -45,8 +45,8 @@ if cells_to_update:
     sheet.update_cells(cells_to_update)
     sheet.batch_format(formats_to_update)
 
-digits1 = [i for i in range(10)]
-digits2 = [i for i in range(10)]
+digits1 = list(range(10))
+digits2 = list(range(10))
 
 random.shuffle(digits1)
 random.shuffle(digits2)
@@ -58,4 +58,4 @@ for i in range(3, 13):
 
 sheet.update_cells(digits_cells)
 
-print("DONE.")
+print(f"{spreadsheet_name} updated.")
