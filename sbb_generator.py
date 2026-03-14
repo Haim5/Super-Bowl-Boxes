@@ -3,8 +3,8 @@ from gspread.utils import rowcol_to_a1
 from oauth2client.service_account import ServiceAccountCredentials
 import random
 
-spreadsheet_name = ""
-secret_key_path = ""
+spreadsheet_name = "" ## enter the spreadsheet's name
+secret_key_path = "" ## enter path to json file
 
 scopes = [
     "https://www.googleapis.com/auth/spreadsheets",
